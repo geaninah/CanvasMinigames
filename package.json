@@ -1,0 +1,20 @@
+{
+  "name": "Something",
+  "version": "1.0.0",
+  "description": "test-app",
+  "main": "app.js",
+  "keywords": [
+    "start",
+    "test-app",
+    "practice"
+  ],
+  "dependencies": {
+    "express": "*",
+    "fs": "*",
+    "http": "*",
+    "path" : "*"
+  },
+  
+  "author": "Geanina Hinta",
+  "license": "MIT"
+}
