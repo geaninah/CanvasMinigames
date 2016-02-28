@@ -5,4 +5,4 @@ app.get('/hello', function(request, response) {
     response.send('Hello World!');
 });
 
-app.listen(777);
+app.listen(process.env.PORT || 777);
