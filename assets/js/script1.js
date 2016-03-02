@@ -14,7 +14,3 @@ context.fillRect((screenRectangle.right - 100) / 2, (screenRectangle.bottom - 10
 
 var rows;
 var columns;
-
-
-
-
