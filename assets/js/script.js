@@ -1,8 +1,8 @@
 var screen = document.getElementById('screen');
 var context = screen.getContext('2d');
 
-screen.width = window.innerWidth * 0.8;
-screen.height = window.innerHeight * 0.8;
+screen.width = window.innerWidth * 0.6;
+screen.height = window.innerHeight * 0.6;
 
 var tiles;
 
@@ -26,10 +26,35 @@ var generateTiles = function(rows, columns){
     return tiles;
 };
 
+var changeState = function(row, column){
+    if(tiles[row][column] == 0){
+        tiles[row][column] = 1;
+    }
+    else{
+        tiles[row][column] = 0;
+    }
+}
+
+var changeTiles = function(row, column){
+    if(column > 0){
+        changeState(row, column - 1);
+    }
+    if(column < tiles[0].length - 1){
+        changeState(row, column + 1);
+    }
+    if(row > 0){
+        changeState(row - 1, column);
+    }
+    if(row < tiles.length - 1){
+        changeState(row + 1, column);
+    }
+    changeState(row, column);
+}
+
 var drawTiles = function(){
     var rows = tiles.length;
     var columns = tiles[0].length;
-    var padding = 10;
+    var padding = 5;
 
     // Calculates the width of a tile
     var width = (screen.width - (columns + 1) * padding) / columns;
@@ -71,4 +96,28 @@ var initializeGame = function(rows, columns){
     draw();
 };
 
-initializeGame(4, 3);
+var noOfRows = 4;
+var noOfColumns = 3;
+initializeGame(noOfRows, noOfColumns);
+
+screen.addEventListener('click', function(e) {
+    var clickedRow = Math.floor(getY(e) / (screen.height / noOfRows));
+    var clickedColumn = Math.floor(getX(e) / (screen.width / noOfColumns));
+    changeTiles(clickedRow, clickedColumn);
+    drawTiles();
+});
+
+var getX = function(e) {
+    var rect = screen.getBoundingClientRect();
+    var relativeX = e.clientX - rect.left;
+
+    return relativeX;
+};
+
+var getY = function(e) {
+    var rect = screen.getBoundingClientRect();
+    var relativeY = e.clientY - rect.top;
+
+    return relativeY;
+};
+
