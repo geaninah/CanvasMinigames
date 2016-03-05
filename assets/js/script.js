@@ -51,7 +51,8 @@ var click = function(e){
 
     if(hasWon()){
         alert("You won! Number of clicks: " + flipCount);
-        initializeGame(rows, columns);
+        initialize(rows, columns);
+        draw();
     }
 }
 
