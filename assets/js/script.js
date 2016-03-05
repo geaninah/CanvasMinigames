@@ -4,55 +4,6 @@ var context = screen.getContext('2d');
 screen.width = window.innerWidth * 0.4;
 screen.height = window.innerHeight * 0.6;
 
-var rows;
-var columns;
-var tiles;
-
-var generateTiles = function(){
-    tiles = [];
-
-    for(var row = 0; row < rows; row++){
-        tiles.push([]);
-        
-        for(var column = 0; column < columns; column++){
-            tiles[row].push(0);
-        }
-    }
-
-    for(var index = 0; index < 7; index++){
-        changeTiles(Math.floor(Math.random() * rows), 
-            Math.floor(Math.random() * columns));
-    }
-};
-
-var changeState = function(row, column){
-    if(tiles[row][column] == 0){
-        tiles[row][column] = 1;
-    }else{
-        tiles[row][column] = 0;
-    }
-}
-
-var changeTiles = function(row, column){
-    if(column > 0){
-        changeState(row, column - 1);
-    }
-
-    if(column < tiles[0].length - 1){
-        changeState(row, column + 1);
-    }
-    
-    if(row > 0){
-        changeState(row - 1, column);
-    }
-    
-    if(row < tiles.length - 1){
-        changeState(row + 1, column);
-    }
-    
-    changeState(row, column);
-}
-
 var drawTiles = function(){
     var padding = 5;
 
@@ -87,61 +38,24 @@ var draw = function(){
     context.fillStyle = '#000000';
     context.fillRect(0, 0, screen.width, screen.height);
     
-    // Draws the tiles.
+    // Draws the tiles
     drawTiles();
 };
 
-var initializeGame = function(noOfRows, noOfColumns){
-    rows = noOfRows;
-    columns = noOfColumns;
-    generateTiles();
-    draw();
-};
-
-var hasWon = function(){
-    var firstCheck = tiles[0][0];
-
-    for(var row = 0; row < rows; row++){
-        for(var column = 0; column < columns; column++){
-            if(tiles[row][column] != firstCheck){
-                return false;
-            }
-        }
-    }
-
-    return true;
-};
-
-var noOfClicks = 0;
-
-screen.addEventListener('click', function(e){
-    var clickedRow = Math.floor(getY(e) / (screen.height / rows));
-    var clickedColumn = Math.floor(getX(e) / (screen.width / columns));
+var click = function(e){
+    var row = Math.floor(getY(e) / (screen.height / rows));
+    var column = Math.floor(getX(e) / (screen.width / columns));
     
-    changeTiles(clickedRow, clickedColumn);
+    flip(row, column);
     draw();
-
-    noOfClicks++;
 
     if(hasWon()){
-        alert("You won! Number of clicks: " + noOfClicks);
+        alert("You won! Number of clicks: " + flipCount);
         initializeGame(rows, columns);
-        noOfClicks = 0;
     }
-});
+}
 
-var getX = function(e){
-    var rect = screen.getBoundingClientRect();
-    var relativeX = e.clientX - rect.left;
+screen.addEventListener('click', click);
 
-    return relativeX;
-};
-
-var getY = function(e){
-    var rect = screen.getBoundingClientRect();
-    var relativeY = e.clientY - rect.top;
-
-    return relativeY;
-};
-
-initializeGame(3, 4);
+initialize(3, 4);
+draw();
