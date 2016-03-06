@@ -3,23 +3,33 @@ var context = screen.getContext('2d');
 screen.width  = 700;
 screen.height = 700;
 
-var white = new Image();
-var red = new Image();
-var green = new Image();
-var blue = new Image();
 var matrix;
 var playerPosition;
 var width = screen.width / 16;
 var height = screen.height / 16;
 
+// Sets the tile images
+var white = new Image();
+var red = new Image();
+var green = new Image();
+var blue = new Image();
+
 white.src = './assets/img/white.jpg';
-green.src = './assets/img/green.jpg';
 red.src = './assets/img/red.jpg';
+green.src = './assets/img/green.jpg';
 blue.src = './assets/img/blue.jpg';
 
-white.onload = function() {
-    draw();
+var imageLoadCount = 0;
+var onLoad = function(){
+    if (++imageLoadCount == 4) {
+        draw();
+    }
 };
+
+white.onload = onLoad;
+red.onload = onLoad;
+green.onload = onLoad;
+blue.onload = onLoad;
 
 var drawTiles = function(){
     rows = 16;
