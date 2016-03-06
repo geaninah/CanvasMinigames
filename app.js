@@ -5,8 +5,12 @@ app.get('/hello', function(request, response) {
     response.sendFile(__dirname + '/index.html');
 });
 
-app.get('/', function(request, response) {
+app.get('/flip', function(request, response) {
     response.sendFile(__dirname + '/game.html');
+});
+
+app.get('/maze', function(request, response) {
+    response.sendFile(__dirname + '/maze.html');
 });
 
 app.use('/assets', express.static('assets'));
