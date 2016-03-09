@@ -13,6 +13,10 @@ app.get('/maze', function(request, response) {
     response.sendFile(__dirname + '/maze.html');
 });
 
+app.get('/pacman', function(request, response) {
+    response.sendFile(__dirname + '/pac-man.html');
+});
+
 app.use('/assets', express.static('assets'));
 
 app.listen(process.env.PORT || 777);
