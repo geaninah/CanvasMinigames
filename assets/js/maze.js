@@ -84,7 +84,7 @@ var moveDown = function(){
     var row = playerPosition[0];
     var column = playerPosition[1];
 
-    if(row < 15 && matrix[row + 1][column] == 1 || matrix[row + 1][column] == 2){
+    if(row < 15 && matrix[row + 1][column] == 1){
         playerPosition = [row + 1, column];
     }
 };
