@@ -75,10 +75,13 @@ var drawTiles = function(){
     drawPoints();
 };
 
+var noOfDiamondsCollected;
+
 var initialize = function(){
     level = getFirstLevel();
     tileWidth = screen.width / level.columns;
     tileHeight = screen.height / level.rows;
+    noOfDiamondsCollected = 0;
 };
 
 var movePlayer = function(row, column){
@@ -126,7 +129,7 @@ var draw = function(){
     context.drawImage(player, x, y, tileWidth, tileHeight)
 }
 
-var noOfDiamondsCollected = 0;
+var noOfDiamondsCollected;
 var collectDiamonds = function(){
     // Check if on the current position is any point
     for(var index = 0; index < level.points.length; index++){
@@ -142,7 +145,7 @@ var collectDiamonds = function(){
 
 var hasWon = function(){
     if(level.playerPosition[0] == level.rows - 1 && level.playerPosition[1] == level.rows - 1 && 
-        noOfDiamondsCollected == totalNoOfPoints){
+        noOfDiamondsCollected == level.noOfPoints){
         return true;
     }
 }
@@ -169,6 +172,7 @@ document.addEventListener('keydown', function(e){
         alert("You won!");
         initialize();
         draw();
+        noOfDiamondsCollected = 0;
     }
 });
 
