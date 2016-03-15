@@ -81,60 +81,40 @@ var initialize = function(){
     tileHeight = screen.height / level.rows;
 };
 
-var moveDown = function(){
-    var row = level.playerPosition[0];
-    var column = level.playerPosition[1];
-
-    // Check if the character can make another move or it died
-    if(row < level.rows - 1 && level.matrix[row + 1][column] == 1){
-        level.playerPosition = [row + 1, column];
-    }else if(row < level.rows - 1 && level.matrix[row + 1][column] == 2){
-        alert("You died");
-        initialize();
-        draw();
+var movePlayer = function(row, column){
+    if(row < 0 || row > level.rows - 1){
+        return;
     }
+
+    if(column < 0 || column >= level.columns - 1){
+        return;
+    }
+
+    switch(level.matrix[row][column]){
+        case 1: 
+            level.playerPosition = [row, column];
+            return;
+        case 2:
+            alert("You died");
+            initialize();
+            return;
+    }
+}
+
+var moveDown = function(){
+    movePlayer(level.playerPosition[0] + 1, level.playerPosition[1]);
 };
 
 var moveUp = function(){
-    var row = level.playerPosition[0];
-    var column = level.playerPosition[1];
-
-    // Check if the character can make another move or it died
-    if(row > 0 && level.matrix[row - 1][column] == 1){
-        level.playerPosition = [row - 1, column];
-    }else if(row > 0 && level.matrix[row - 1][column] == 2){
-        alert("You died");
-        initialize();
-        draw();
-    }
+    movePlayer(level.playerPosition[0] - 1, level.playerPosition[1]);
 };
 
 var moveLeft = function(){
-    var row = level.playerPosition[0];
-    var column = level.playerPosition[1];
-
-    // Check if the character can make another move or it died
-    if(column > 0 && level.matrix[row][column - 1] == 1){
-        level.playerPosition = [row, column - 1];
-    }else if(column > 0 && level.matrix[row][column - 1] == 2){
-        alert("You died");
-        initialize();
-        draw();
-    }
+    movePlayer(level.playerPosition[0], level.playerPosition[1] - 1);
 };
 
 var moveRight = function(){
-    var row = level.playerPosition[0];
-    var column = level.playerPosition[1];
-
-    // Check if the character can make another move or it died
-    if(column < level.rows - 1 && level.matrix[row][column + 1] == 1){
-        level.playerPosition = [row, column + 1];
-    }else if(column < level.rows - 1 && level.matrix[row][column + 1] == 2){
-        alert("You died");
-        initialize();
-        draw();
-    }
+    movePlayer(level.playerPosition[0], level.playerPosition[1] + 1);
 }
 
 var draw = function(){
