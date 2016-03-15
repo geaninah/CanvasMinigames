@@ -86,9 +86,9 @@ var moveDown = function(){
     var column = level.playerPosition[1];
 
     // Check if the character can make another move or it died
-    if(row < 31 && level.matrix[row + 1][column] == 1){
+    if(row < level.rows - 1 && level.matrix[row + 1][column] == 1){
         level.playerPosition = [row + 1, column];
-    }else if(row < 31 && level.matrix[row + 1][column] == 2){
+    }else if(row < level.rows - 1 && level.matrix[row + 1][column] == 2){
         alert("You died");
         initialize();
         draw();
@@ -128,9 +128,9 @@ var moveRight = function(){
     var column = level.playerPosition[1];
 
     // Check if the character can make another move or it died
-    if(column < 31 && level.matrix[row][column + 1] == 1){
+    if(column < level.rows - 1 && level.matrix[row][column + 1] == 1){
         level.playerPosition = [row, column + 1];
-    }else if(column < 31 && level.matrix[row][column + 1] == 2){
+    }else if(column < level.rows - 1 && level.matrix[row][column + 1] == 2){
         alert("You died");
         initialize();
         draw();
@@ -150,7 +150,9 @@ var noOfDiamondsCollected = 0;
 var collectDiamonds = function(){
     // Check if on the current position is any point
     for(var index = 0; index < level.points.length; index++){
-        if(level.points[index][0] == level.playerPosition[1] && level.points[index][1] == level.playerPosition[0]){
+        if(level.points[index][0] == level.playerPosition[1] && 
+            level.points[index][1] == level.playerPosition[0]){
+            
             level.points.splice(index,1);
             // Increase the number of collected diamonds
             noOfDiamondsCollected++;
@@ -159,7 +161,8 @@ var collectDiamonds = function(){
 }
 
 var hasWon = function(){
-    if(level.playerPosition[0] == 31 && level.playerPosition[1] == 31 && noOfDiamondsCollected == totalNoOfPoints){
+    if(level.playerPosition[0] == level.rows - 1 && level.playerPosition[1] == level.rows - 1 && 
+        noOfDiamondsCollected == totalNoOfPoints){
         return true;
     }
 }
