@@ -82,11 +82,11 @@ var initialize = function(){
 };
 
 var movePlayer = function(row, column){
-    if(row < 0 || row > level.rows - 1){
+    if(row < 0 || row >= level.rows){
         return;
     }
 
-    if(column < 0 || column >= level.columns - 1){
+    if(column < 0 || column >= level.columns){
         return;
     }
 
